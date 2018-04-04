@@ -1,0 +1,22 @@
+{
+  "name": "web-blog",
+  "version": "1.0.0",
+  "description": "a simple personal blog.",
+  "main": "app.js",
+  "scripts": {
+    "server": "node app.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "blog"
+  ],
+  "author": "sialin",
+  "license": "ISC",
+  "dependencies": {
+    "koa": "^2.5.0",
+    "koa-body": "^2.5.0",
+    "koa-router": "^7.4.0",
+    "koa-static": "^4.0.2",
+    "mongoose": "^5.0.12"
+  }
+}

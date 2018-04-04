@@ -1,0 +1,266 @@
+/*样式重置*/
+body, div, p, ul, ol, dl, dt, dd, li, form, input, table, th,td, img, h1, h2, h3, h4, h5, h6 {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background: #fff;
+  color: #000;
+  font-size: 12px;
+  font-style: normal;
+  font-family: 'Microsoft Yahei', '微软雅黑', 'Simsun', '宋体', 'Arial', sans-serif;
+}
+
+em, b, i {
+  font-style: normal;
+}
+
+li {
+  list-style: none;
+}
+
+img {
+  border: none;
+}
+
+a {
+  text-decoration: none;
+  color: #999;
+}
+
+a:hover {
+  text-decoration: underline;
+  color: #45B6F7;
+}
+
+table {
+  border-spacing: 0;
+  border-collapse: collapse;
+}
+
+/*公共样式*/
+.hide{
+  display: none;
+}
+
+.flt{
+  float: left;
+}
+
+.frt{
+  float: right;
+}
+
+.clearfix{
+  *zoom: 1;
+}
+
+.clearfix:before,.clearfix:after{
+  display: table;
+  line-height: 0;
+  content: "";
+}
+
+.clearfix:after{
+  clear:both;
+}
+
+/*主要模块样式*/
+.module-header {
+  position: relative;
+  background: #fff;
+}
+
+.header-inner,.module-header{
+  height: 110px;
+}
+
+.module-body {
+  min-height: 600px;
+  background: #6c0;
+}
+
+.module-footer {
+  height: 100px;
+  background: #96c;
+}
+
+.module-content {
+  width: 1200px;
+  margin:0 auto;
+}
+
+.top-menu{
+    height: 50px;
+}
+
+.top-menu-link{
+  float: right;
+}
+
+.top-menu-link li{
+  float: left;
+  padding: 0 15px;
+  font-size: 14px;
+  line-height: 50px;
+}
+
+.header-master{
+  height: 32px;
+}
+
+.header-master .logo{
+  width: 137px;
+  height: 32px;
+}
+
+.header-master .slogan{
+  width: 100px;
+  height: 30px;
+  margin-left: 10px;
+  padding-left: 20px;
+  color: #bbb;
+  border-left: 2px solid #eaeaea;
+}
+
+.header-master .slogan p{
+  margin-top: -3px;
+}
+
+.site-navbar{
+  padding-top: 10px;
+}
+
+.site-navbar > ul > li{
+  position: relative;
+  float: left;
+  font-size: 18px;
+padding: 0 15px;
+}
+
+.site-navbar > ul > li a:hover{
+  text-decoration: none;
+}
+
+.sub-menu{
+  display: none;
+  position: absolute;
+  top: 25px;
+  left:-10px;
+  padding: 8px 0;
+  background: #fff;
+  border: 1px solid #ddd;
+  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+  border-radius: 4px;
+}
+
+.sub-menu li a{
+  display: inline-block;
+  font-size:14px;
+  line-height: 32px;
+  padding: 0 50px 0 20px;
+}
+
+.sub-menu li a:hover{
+  background-color: #f6f6f6;
+
+}
+
+.site-navbar > ul > li:hover .sub-menu{
+  display: block;
+}
+
+.site-navbar > ul > li.nav-search{
+  padding-top: 3px;
+}
+
+.search-case{
+  display: inline-block;
+  width: 18px;
+  height: 18px;
+}
+
+.icon-search{
+  background: url('../images/search_24x24px.png') no-repeat;
+  background-size: 18px 18px;
+}
+
+.icon-search:hover{
+  background: url('../images/search_24x24pxhover.png') no-repeat;
+  background-size: 18px 18px;
+}
+
+.icon-close{
+  background: url('../images/close_24x24px.png') no-repeat;
+  background-size: 18px 18px;
+}
+
+.icon-close:hover{
+  background: url('../images/close_24x24pxhover.png') no-repeat;
+  background-size: 18px 18px;
+}
+
+.site-search{
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: -1;
+  height: 100px;
+  background: rgba(255,255,255,0.8);
+}
+
+.site-search.search-show{
+  top: 110px;
+  z-index: 0;
+  transition: all ease 0.3s;
+}
+
+
+.site-search .search-box{
+  padding: 25px 0;
+  text-align: center;
+}
+
+.site-search-form{
+  display: inline-block;
+}
+
+.site-search-form .site-search-input{
+  float: left;
+  width: 612px;
+  height: 50px;
+  padding: 4px 12px;
+  font-size: 16px;
+  color: #999;
+  border: solid 1px #ddd;
+  box-sizing: border-box;
+  border-radius: 2px 0 0 2px;
+  outline: none;
+}
+
+.site-search-form .site-search-input:focus{
+  border-color: #45B6F7;
+}
+
+.site-search-form .site-search-btn{
+  width: 108px;
+  height: 50px;
+  background: #45B6F7;
+  border-radius:0 2px 2px 0;
+  border: none;
+  cursor: pointer;
+}
+
+.site-search-form .site-search-btn:hover{
+  opacity: 0.85;
+  filter: alpha(opacity=85;)
+}
+
+.icon-search-white{
+  display: inline-block;
+  width: 24px;
+  height: 24px;
+  background: url('../images/search_24x24pxwhite.png') no-repeat;
+}
