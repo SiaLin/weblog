@@ -66,6 +66,17 @@ table {
   clear:both;
 }
 
+.mb-15 {
+    margin-bottom: 15px;
+}
+
+.mb-20 {
+    margin-bottom: 20px;
+}
+
+.br{
+  border-radius: 5px;
+}
 /*主要模块样式*/
 .module-header {
   position: relative;
@@ -78,7 +89,8 @@ table {
 
 .module-body {
   min-height: 600px;
-  background: #6c0;
+  background: #f6f6f6;
+  padding-top: 16px;
 }
 
 .module-footer {
@@ -213,7 +225,7 @@ padding: 0 15px;
 
 .site-search.search-show{
   top: 110px;
-  z-index: 0;
+  z-index: 1;
   transition: all ease 0.3s;
 }
 
@@ -263,4 +275,105 @@ padding: 0 15px;
   width: 24px;
   height: 24px;
   background: url('../images/search_24x24pxwhite.png') no-repeat;
+}
+
+
+.module-main {
+    float: left;
+    width: 820px;
+}
+
+/* 轮播图 */
+
+.module-banner{
+  height: 200px;
+  background-color:#45B6F7;
+}
+
+.banner-box{
+  width: 820px;
+  height: 200px;
+  position: relative;
+  text-align: center;
+  overflow: hidden;
+}
+
+.banner-box .img{
+  width: 5000px;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.banner-box .img li{
+  float: left;
+}
+
+.banner-box .li{
+  width: 100%;
+  position: absolute;
+  left: 0;
+  bottom: 10px;
+}
+
+.banner-box .li li{
+  width: 10px;
+  height: 10px;
+  background: #ccc;
+  border-radius: 50%;
+  display: inline-block;
+  margin: 0 3px;
+  cursor: pointer;
+  /* 设定鼠标的形状为一只伸出食指的手 */
+}
+.banner-box .but {
+    position: absolute;
+    top: 50%;
+    margin-top: -30px;
+    width: 38px;
+    height: 60px;
+    line-height: 60px;
+    text-align: center;
+    font-size: 30px;
+    background: rgba(0, 0, 0, 0.5);
+    color: #fff;
+    font-family: '宋体';
+    cursor: pointer;
+    display: none;
+}
+
+.banner-box:hover .but {
+    display: block;
+}
+
+.banner-box .but-left {
+    left: 0;
+}
+
+.banner-box .but-right {
+    right: 0;
+}
+
+.banner-box .li .index {
+    background: #f60;
+    width: 30px;
+    border-radius: 10px;
+}
+
+.banner-box .bar {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    height: 5px;
+    background-color: hsla(24, 100%, 50%, 0.5);
+}
+
+/* banner end */
+
+
+.sidebar{
+  float: right;
+  width: 358px;
+  height: 250px;
+  background-color: red;
 }
