@@ -75,6 +75,7 @@ table {
 }
 
 .br{
+  border: 1px solid #eaeaea;
   border-radius: 5px;
 }
 /*主要模块样式*/
@@ -148,7 +149,7 @@ table {
   position: relative;
   float: left;
   font-size: 18px;
-padding: 0 15px;
+  padding: 0 15px;
 }
 
 .site-navbar > ul > li a:hover{
@@ -158,6 +159,7 @@ padding: 0 15px;
 .sub-menu{
   display: none;
   position: absolute;
+  z-index: 1;
   top: 25px;
   left:-10px;
   padding: 8px 0;
@@ -176,7 +178,6 @@ padding: 0 15px;
 
 .sub-menu li a:hover{
   background-color: #f6f6f6;
-
 }
 
 .site-navbar > ul > li:hover .sub-menu{
@@ -288,6 +289,7 @@ padding: 0 15px;
 .module-banner{
   height: 200px;
   background-color:#45B6F7;
+  border-radius: 5px;
 }
 
 .banner-box{
@@ -296,6 +298,7 @@ padding: 0 15px;
   position: relative;
   text-align: center;
   overflow: hidden;
+  border-radius: 5px;
 }
 
 .banner-box .img{
@@ -370,8 +373,151 @@ padding: 0 15px;
 
 /* banner end */
 
+.module-job-ad{
+  width: 800px;
+  height: 140px;
+  background-color: #fff;
+  padding-left: 20px;
+}
 
-.sidebar{
+.module-job-ad .title{
+  font-size: 18px;
+  line-height: 50px;
+  margin-top: 8px;
+  font-weight: bold;
+}
+
+.module-job-ad .title .note{
+  color: #ff5e52;
+}
+
+.module-job-ad  p{
+  font-size: 14px;
+  line-height:22px;
+  text-indent: 28px;
+}
+
+.module-column-title{
+  margin-bottom: 10px;
+}
+
+.module-column-title h3{
+  font-size: 18px;
+  line-height: 18px;
+  font-weight: normal;
+}
+
+.module-column-title .more a{
+  text-decoration: none;
+}
+
+.module-article-list{
+  min-height: 600px;
+  background-color: #ffffff;
+}
+
+.listBox li{
+  box-sizing: border-box;
+  background-color: #ffffff;
+  height: 192px;
+  border-bottom: 1px solid #eaeaea;
+  padding:15px 20px 0 20px;
+}
+
+.listBox li:hover{
+  background-color: #f1f1f1;
+}
+
+.listBox li img{
+  margin-right:20px;
+}
+
+.listBox .cat{
+  display: inline-block;
+  position: relative;
+  height: 23px;
+  line-height: 23px;
+  padding:0 6px;
+  margin-right: 11px;
+  font-size: 12px;
+  font-weight: normal;
+  color: #fff;
+  background-color: #45bcf9;
+}
+
+.listBox .icon-arrow{
+  position: absolute;
+  right: 0;
+  top: 8px;
+}
+.listBox .icon-arrow:before{
+    position: absolute;
+    content: "";
+    width: 0;
+    height: 0;
+    left: 0;
+    top:0;
+    border-left: 4px solid #45bcf9;
+    border-top: 4px solid transparent;
+    border-bottom: 4px solid transparent;
+}
+
+.listBox .title-link{
+  color: #555555;
+}
+
+.listBox .title-link:hover{
+  color: #45bcf9;
+}
+
+.article-info .title a{
+  text-decoration: none;
+}
+
+.article-info .meta{
+  margin-bottom: 14px;
+}
+
+.article-info .meta i,.article-info .desc{
+   color: #9f9f9f;
+}
+
+.article-info .meta i{
+  position: relative;
+  padding-left: 15px;
+  margin-right: 15px;
+  font-size: 10px;
+  line-height: 1;
+}
+/* 图标 */
+.meta i::before {
+    display: inline-block;
+    position: absolute;
+    top: 2px;
+    left: 0;
+    content: '';
+    width: 12px;
+    height: 12px;
+    margin-right: 5px;
+}
+
+.meta .icon-time::before {
+    background: url('../images/time_16x16px.png') no-repeat;
+    background-size: 12px 12px;
+}
+
+.meta .icon-user::before {
+    background: url('../images/user_16x16px.png') no-repeat;
+    background-size: 10px 12px;
+}
+
+.article-info .desc{
+  font-size: 12px;
+  text-indent: 24px;
+  line-height: 20px;
+}
+
+.module-sidebar{
   float: right;
   width: 358px;
   height: 250px;

@@ -19,10 +19,10 @@ app.use(koaBody());
 app.use(router.routes()).use(router.allowedMethods());
 app.use(staticServer(__dirname +'/view'));  //__dirname文件的绝对路径
 
-router.get('/',(ctx,next) => {
-  console.log(ctx.query);
-  ctx.body = 'The server already start.';
-});
+// router.get('/',(ctx,next) => {
+//   console.log(ctx.query);
+//   ctx.body = 'The server already start.';
+// });
 
 router.get('/api/getList',(ctx,next) =>{
   ctx.body = {
@@ -36,17 +36,19 @@ router.get('/api/getList',(ctx,next) =>{
   }
 });
 
+
+//1、后端接口
 router.post('/api/news/save',async (ctx,next) =>{   ///api/news/save    后端接口接收数据
   //async 声明是异步函数，里面存着异步的东西
   // 数据写入数据库的时候受网络网速的影响，磁盘读取的快慢的影响。
   //await告诉它等待写完后再把写入数据的结果返回给res
-  const payload =ctx.request.body;  //
+  const payload =ctx.request.body;  //2、接收数据
   const data = {
     title:payload.title,
     content: payload.content,
     createdTime: Date.now()   //保存时间戳
-  }
-  const res = await News.create(data);   //拼装成数据库要的格式，然后创建到数据库里面
+  }//3、拼装成数据库要的格式
+  const res = await News.create(data);   //4、然后创建到数据库里面  News是news.model.js定义好的数据库对象   res=>返回结果
   if(!res) {
     ctx.body={code:9999,msg:'保存失败！'};
     return;
@@ -54,10 +56,23 @@ router.post('/api/news/save',async (ctx,next) =>{   ///api/news/save    后端�
   //创建完后返回结果，返回后就把数据返回给前端
   ctx.body = {
     code:10000,
-    data:res,
+    data:res,    //5、将结果返回给前端
     msg:'保存成功！'
   }
 });
+
+
+//作为后端写了一个获取文章的接口
+router.get('/api/article/list',async(cxt,next) =>{
+  const list = await News.find({});  //等获取到数据后赋值给列表list
+  cxt.body={  //返回回去
+    code:10000,
+    data:{
+      list:list || []
+    },
+    msg:'请求成功！'
+  }
+})
 
 app.listen(port, () => {
   console.log('the app start at port:',port);
