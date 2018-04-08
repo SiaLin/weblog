@@ -112,7 +112,46 @@ $(document).ready(function(e){
       success: function(res){     //请求成功执行
         if(res && res.code === 10000){
           var list = res.data.list || [];   //如果list没有那拿就把空数组【】赋给list   异常考虑
-          //把列表渲染到页面中
+          //把列表渲染到页面中     es6模板字符串语法（拼接字符串）
+          var liHTML = '';   //定义空标签
+          for (let i = 0; i < list.length; i++) {  //for循环
+            var item = list[i];  //每一个具体的文章
+
+            //原始拼接字符串的方法
+            // liHTML +=`<li>`+
+            //   `<img class="article-thumbnail flt" src="images/timg-220x150.jpg" alt="">`+
+            //   `<div class="article-info">`+
+            //     `<h2 class="title mb-15">`+
+            //       `<a href="" class="cat">`+(item.author || '未知')+
+            //         `<i class="icon-arrow"></i>`+
+            //       `</a>`+
+            //       `<a href="" class="title-link">`+item.title+`</a>`+
+            //     `</h2>`+
+            //     `<div class="meta">`+
+            //       `<i class="icon-time">`+item.createdTime+`</i>`+   // 时间戳   时间戳转时间（百度）
+            //       `<i class="icon-user">`+(item.author || '未知')+`</i>`+
+            //     `</div>`+
+            //     `<div class="desc">`+item.content+`</div>`+
+            //   `</div>`+
+            // `</li>`
+            liHTML += `<li>
+                            <img class="article-thumbnail flt" src="images/timg-220x150.jpg" alt="">
+                            <div class="article-info">
+                              <h2 class="title mb-15">
+                                <a href="" class="cat">${item.author || '未知'}<i class="icon-arrow"></i>
+                                </a>
+                                <a href="" class="/detail.html?id=${item._id}">${item.title}</a>
+                              </h2>
+                              <div class="meta">
+                                <i class="icon-time">${item.createdTime}</i>
+                                <i class="icon-user">${item.author || '未知'}</i>
+                              </div>
+                              <div class="desc">${item.content}</div>
+                            </div>
+                        </li>`
+          }
+          console.log(liHTML);
+          $("#listBox").append(liHTML);//添加到页面中
         }
       },
       error:function(err){        //请求出错执行

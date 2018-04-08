@@ -18,12 +18,16 @@
 <body>
   <form id="edit-form">
     <div class="input-form">
-      <span>标签：</span>
+      <span>标题：</span>
       <input id="title">
     </div>
     <div class="input-filed">
-    <span>内容：</span>
-    <textarea id="content" rows="5"></textarea>
+      <span>内容：</span>
+      <textarea id="content" rows="5"></textarea>
+    </div>
+    <div class="input-filed">
+      <span>作者：</span>
+      <input id="author"></input>
     </div>
     <button type="submit" class="btn-save">保存</button>
 
@@ -34,16 +38,22 @@
     $('#edit-form').on('submit',function(res){
       var title = $('#title').val();
       var content = $('#content').val();
+      var author = $('#author').val();
       //前端通过AJAX向后端传数据，往后端调接口（后端接口）
       $.ajax({
         url:'/api/news/save',
         type:'post',
         data:{
           title:title,
-          content:content
+          content:content,
+          author:author
         },
         dataType:'json',
         success:function(res){
+          if(res && res.code === 10000){
+            alert(res.msg);   //请求成功弹出 res.msg
+            location.href = '/';  //跳转到首页去
+          }
           console.log(res)
         },
         error:function(err){

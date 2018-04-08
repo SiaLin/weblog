@@ -46,6 +46,7 @@ router.post('/api/news/save',async (ctx,next) =>{   ///api/news/save    后端�
   const data = {
     title:payload.title,
     content: payload.content,
+    author: payload.author,
     createdTime: Date.now()   //保存时间戳
   }//3、拼装成数据库要的格式
   const res = await News.create(data);   //4、然后创建到数据库里面  News是news.model.js定义好的数据库对象   res=>返回结果
@@ -74,6 +75,22 @@ router.get('/api/article/list',async(cxt,next) =>{
   }
 })
 
+
+//查询单条数据   例如 http://127.0.0.1:8080/api/article/get?id=5ac9778d83887918f405f720
+router.get('/api/article/get',async(cxt,next) =>{
+  const params = cxt.query;  //获取url传过来的数据   赋值给一个对象
+  console.log(params);
+
+
+  const doc = await News.findOne({
+    _id:params.id    //对象id传给一个字段_id（对应数据库里面的表里的字段一一对应）
+  });  //等获取到数据后赋值给列表list
+  cxt.body={  //返回回去
+    code:10000,
+    data:doc,
+    msg:'请求成功！'
+  }
+})
 app.listen(port, () => {
   console.log('the app start at port:',port);
 })
