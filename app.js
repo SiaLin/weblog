@@ -75,7 +75,6 @@ router.get('/api/article/list',async(cxt,next) =>{
   }
 })
 
-
 //查询单条数据   例如 http://127.0.0.1:8080/api/article/get?id=5ac9778d83887918f405f720
 router.get('/api/article/get',async(cxt,next) =>{
   const params = cxt.query;  //获取url传过来的数据   赋值给一个对象
@@ -90,7 +89,60 @@ router.get('/api/article/get',async(cxt,next) =>{
     data:doc,
     msg:'请求成功！'
   }
-})
+});
+
+
+//删除
+//npmjs官网    查询 koa-router  delete如何使用
+router.del('/api/article/:id',async(cxt,next) =>{
+  const params = cxt.params;  //获取url传过来的数据   赋值给一个对象
+  console.log(params);
+
+
+  const result = await News.deleteOne({   //查看mongo官方文档删除的方法
+    _id:params.id    //对象id传给一个字段_id（对应数据库里面的表里的字段一一对应）
+  });  //等获取到数据后赋值给列表list
+
+  if (result && result.n ===1){
+    cxt.body={  //返回回去
+      code: 10000,
+      data: result,
+      msg: '删除成功！'
+    }
+  }else {
+    cxt.body={  //返回回去
+      code: 9999,
+      data: null,
+      msg: '删除失败！'
+    }
+  }
+
+});
+
+
+
+//定义修改文章的接口
+router.post('/api/news/edit',async (ctx,next) =>{
+
+  const payload =ctx.request.body;  //接收数据
+  const id = payload.id;  //传id => 修改某条数据
+  const result = await News.findOneAndUpdate({ _id:id },payload,{new:true});  //条件：{_id:id}  通过_id找到相应的文章  然后把修改后的内容填写进来
+    //result =>修改后的内容
+  if(!result) {
+    ctx.body={code:9999,msg:'修改失败！'};
+    return;
+  }
+  //创建完后返回结果，返回后就把数据返回给前端
+  ctx.body = {
+    code:10000,
+    data:result,    //将结果返回给前端
+    msg:'修改成功！'
+  }
+});
+
+
+
+//监听服务端口
 app.listen(port, () => {
   console.log('the app start at port:',port);
 })

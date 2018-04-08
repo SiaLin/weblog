@@ -134,13 +134,14 @@ $(document).ready(function(e){
             //     `<div class="desc">`+item.content+`</div>`+
             //   `</div>`+
             // `</li>`
+            // es6拼接字符方法
             liHTML += `<li>
                             <img class="article-thumbnail flt" src="images/timg-220x150.jpg" alt="">
                             <div class="article-info">
                               <h2 class="title mb-15">
                                 <a href="" class="cat">${item.author || '未知'}<i class="icon-arrow"></i>
                                 </a>
-                                <a href="" class="/detail.html?id=${item._id}">${item.title}</a>
+                                <a href="/detail.html?id=${item._id}" class="title-link">${item.title}</a>
                               </h2>
                               <div class="meta">
                                 <i class="icon-time">${item.createdTime}</i>
@@ -161,4 +162,7 @@ $(document).ready(function(e){
   }
 
   getList();
+
+
+
 });

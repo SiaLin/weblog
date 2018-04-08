@@ -4,9 +4,75 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>Document</title>
+  <title>文章详情页面</title>
 </head>
+<style>
+/*样式还没搞定*/
+  .content{
+    /* background-color: #000; */
+    margin: 0 auto;
+    margin-top: 200px;
+    width: 820px;
+    /* height:100px; */
+    border: 1px solid #f2f2f2;
+    border-radius: 4px;
+  }
+  .content-title{
+    height: 75px;
+    border-bottom: 1px solid #f2f2f2;
+  }
+  .content-title .title{
+    text-align: center;
+    font-weight: normal;
+  }
+</style>
 <body>
+  <div class="content" id="content">
+
+  </div>
+
+  <script src="https://cdn.bootcss.com/jquery/1.12.4/jquery.min.js"></script>
+  <script type="text/javascript">
+
+
+    $(document).ready(function(e){
+    //javascript获取url地址栏参数    正则表达式
+      $.getUrlParam= function(name){
+            var reg = new RegExp("(^|&)"+ name +"=([^&]*)(&|$)");
+            var r = window.location.search.substr(1).match(reg);
+            if (r!=null) return unescape(r[2]); return null;
+      }
+      var id = $.getUrlParam('id');
+      console.log('文章id：',id);
+      var urlParams = '/api/article/get?id='+ id;  //可以把参数拼到url里，也可以作为data传过去
+      function searchList(){
+        $.ajax({
+          url: urlParams,
+          type: 'get',
+          success: function(res){
+            if(res && res.code === 10000){
+              var articleDetail = res.data;
+              var contentHTML = '';
+                contentHTML += `<div class="content-title">
+                      <h3 class="title">${articleDetail.title}</h3>
+                      <span class="time">${articleDetail.createdTime}</span>
+                      <span class="author">${articleDetail.author || '未知'}</span>
+                    </div>
+                    <div class="article">${articleDetail.content}</div>`;
+            console.log(contentHTML);
+            $("#content").append(contentHTML);
+          }
+          },
+          error: function(err){
+            console.log(err);
+          }
+        })
+
+      }
+       searchList();
+    });
+
+  </script>
 
 </body>
 </html>

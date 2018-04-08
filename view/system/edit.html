@@ -34,11 +34,75 @@
   </form>
 <script src="https://cdn.bootcss.com/jquery/1.12.4/jquery.min.js"></script>
 <script type="text/javascript">
+
+
+$.getUrlParam= function(name){
+      var reg = new RegExp("(^|&)"+ name +"=([^&]*)(&|$)");
+      var r = window.location.search.substr(1).match(reg);
+      if (r!=null) return unescape(r[2]); return null;
+}
+
+
   $(document).ready(function(){
+
+    var id = $.getUrlParam('id');
+    //通过id获得详情
+    if(id){
+      console.log("这是修改状态");
+      $.ajax({
+        url:'/api/article/get',
+        type:'get',
+        data:{
+          id:id
+        },
+        success:function(res){
+          if(res && res.code === 10000){
+            var data = res.data;
+            //回填信息到页面中input框中
+            $('#title').val(data.title);
+            $('#content').val(data.content);
+            $('#author').val(data.author);
+          }
+
+        },
+        error: function(err){
+          console.error(err);
+        }
+      });//以上为回填详情数据到页面中
+
+    }
+
     $('#edit-form').on('submit',function(res){
       var title = $('#title').val();
       var content = $('#content').val();
       var author = $('#author').val();
+
+         //请求另一个接口（如果有id，就请求这个接口）
+      if(id){
+        $.ajax({
+          url:'/api/news/edit',   //修改文章的接口
+          type:'post',
+          data:{
+            id:id,
+            title:title,
+            content:content,
+            author:author
+          },
+          success:function(res){
+            if(res && res.code === 10000){
+              alert(res.msg);
+              location.href = '/system/article-list.html';  //跳转到列表页去   href相对于首页  而不是当前页面
+            }
+            console.log(res)
+          },
+          error:function(err){
+              console.error(err)
+          }
+        })
+        return;
+      }
+
+      //编辑新的数据并保存
       //前端通过AJAX向后端传数据，往后端调接口（后端接口）
       $.ajax({
         url:'/api/news/save',
