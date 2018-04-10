@@ -65,7 +65,21 @@ router.post('/api/news/save',async (ctx,next) =>{   ///api/news/save    后端�
 
 //作为后端写了一个获取文章的接口
 router.get('/api/article/list',async(cxt,next) =>{
-  const list = await News.find({});  //等获取到数据后赋值给列表list
+
+  const payload = cxt.query;
+  const keyword = payload.value;   //搜索   通过字段拿到前端传过来的关键字
+  const cond = {};
+  if(keyword){
+    cond.title = new RegExp(keyword,'i');  //模糊查询   正则
+    // cond.title = keyword;    完全匹配才搜到 （用于会计 身份证 记账 借据 编号） => 精准查找
+  }
+  //有人搜索时
+  //把参数cond改成对象  根据情况去捕抓数据
+  //  cond={
+  //    title:keyword
+  //  }
+  // cond 为空的时候 === finde({})没人搜索的时候，把所有文章显示出来
+  const list = await News.find(cond);  //等获取到数据后赋值给列表list
   cxt.body={  //返回回去
     code:10000,
     data:{

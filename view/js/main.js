@@ -112,51 +112,13 @@ $(document).ready(function(e){
       success: function(res){     //请求成功执行
         if(res && res.code === 10000){
           var list = res.data.list || [];   //如果list没有那拿就把空数组【】赋给list   异常考虑
-          //把列表渲染到页面中     es6模板字符串语法（拼接字符串）
-          var liHTML = '';   //定义空标签
-          for (let i = 0; i < list.length; i++) {  //for循环
-            var item = list[i];  //每一个具体的文章
-
-            //原始拼接字符串的方法
-            // liHTML +=`<li>`+
-            //   `<img class="article-thumbnail flt" src="images/timg-220x150.jpg" alt="">`+
-            //   `<div class="article-info">`+
-            //     `<h2 class="title mb-15">`+
-            //       `<a href="" class="cat">`+(item.author || '未知')+
-            //         `<i class="icon-arrow"></i>`+
-            //       `</a>`+
-            //       `<a href="" class="title-link">`+item.title+`</a>`+
-            //     `</h2>`+
-            //     `<div class="meta">`+
-            //       `<i class="icon-time">`+item.createdTime+`</i>`+   // 时间戳   时间戳转时间（百度）
-            //       `<i class="icon-user">`+(item.author || '未知')+`</i>`+
-            //     `</div>`+
-            //     `<div class="desc">`+item.content+`</div>`+
-            //   `</div>`+
-            // `</li>`
-            // es6拼接字符方法
-            liHTML += `<li>
-                            <img class="article-thumbnail flt" src="images/timg-220x150.jpg" alt="">
-                            <div class="article-info">
-                              <h2 class="title mb-15">
-                                <a href="" class="cat">${item.author || '未知'}<i class="icon-arrow"></i>
-                                </a>
-                                <a href="/detail.html?id=${item._id}" class="title-link">${item.title}</a>
-                              </h2>
-                              <div class="meta">
-                                <i class="icon-time">${item.createdTime}</i>
-                                <i class="icon-user">${item.author || '未知'}</i>
-                              </div>
-                              <div class="desc">${item.content}</div>
-                            </div>
-                        </li>`
-          }
-          console.log(liHTML);
-          $("#listBox").append(liHTML);//添加到页面中
+        // console.log(list);
+        //把列表渲染到页面中     es6模板字符串语法（拼接字符串）
+        renderList(list);
         }
       },
       error:function(err){        //请求出错执行
-        console.error(err)
+        console.log(err)
       }
     })
   }
@@ -164,5 +126,99 @@ $(document).ready(function(e){
   getList();
 
 
+  //把列表渲染到页面中的方法独立出来 => renderList方法    es6模板字符串语法（拼接字符串）
+    function renderList(list){
+      var liHTML = '';   //定义空标签
+      for (let i = 0; i < list.length; i++) {  //for循环
+        var item = list[i];  //每一个具体的文章
+
+        //原始拼接字符串的方法
+        // liHTML +=`<li>`+
+        //   `<img class="article-thumbnail flt" src="images/timg-220x150.jpg" alt="">`+
+        //   `<div class="article-info">`+
+        //     `<h2 class="title mb-15">`+
+        //       `<a href="" class="cat">`+(item.author || '未知')+
+        //         `<i class="icon-arrow"></i>`+
+        //       `</a>`+
+        //       `<a href="" class="title-link">`+item.title+`</a>`+
+        //     `</h2>`+
+        //     `<div class="meta">`+
+        //       `<i class="icon-time">`+item.createdTime+`</i>`+   // 时间戳   时间戳转时间（百度）
+        //       `<i class="icon-user">`+(item.author || '未知')+`</i>`+
+        //     `</div>`+
+        //     `<div class="desc">`+item.content+`</div>`+
+        //   `</div>`+
+        // `</li>`
+        // es6拼接字符方法
+        liHTML += `<li>
+                        <img class="article-thumbnail flt" src="images/timg-220x150.jpg" alt="">
+                        <div class="article-info">
+                          <h2 class="title mb-15">
+                            <a href="" class="cat">${item.author || '未知'}<i class="icon-arrow"></i>
+                            </a>
+                            <a href="/detail.html?id=${item._id}" class="title-link">${item.title}</a>
+                          </h2>
+                          <div class="meta">
+                            <i class="icon-time">${item.createdTime}</i>
+                            <i class="icon-user">${item.author || '未知'}</i>
+                          </div>
+                          <div class="desc">${item.content}</div>
+                        </div>
+                    </li>`
+      }
+      // console.log(liHTML);
+      $("#listBox").empty().append(liHTML);//先清空再将相关的文章添加到列表中   添加到页面中
+    }
+
+
+//搜索关键字
+  function onSearch(){
+    $("#btnSearch").on('click',function(ev){
+          getSearch();
+    });
+    $(document).on('keyup',function(ev){    //keyup 按下键盘   13=> enter
+      ev.preventDefault();
+          if(ev.keyCode === 13){     //按enter进行搜索
+            getSearch();
+          }
+          return;
+          //enter  form标签  按enter/提交 会发生跳转事件（无论有没有action）
+          //现阶段把form改为div   (还没解决form默认跳转事件的)
+    });
+    //搜索关键词后   清空搜索框后显示数据库中所有文章
+    $('#searchBox').on('input',function(ev){  //  jquery 的input事件  内容区域发生变化时运行回调函数
+      var val = $(this).val();
+      if(val === ''){
+        getList();
+      }
+    });
+  }
+
+
+//获取关键字并搜索相关的文章标题    getSearch()方法
+    function getSearch(){
+      var keyword = $('#searchBox').val();
+      $.ajax({
+        url:'/api/article/list',
+        type:'get',
+        data:{
+          value:keyword   //value 是后端人员定的    把关键字keyword传给字段value
+        },
+        success:function(res){
+          if(res && res.code === 10000){
+            var list = res.data.list || [];   //如果list没有那拿就把空数组【】赋给list   异常考虑
+          // console.log(list);   文章列表
+          //把列表渲染到页面中     es6模板字符串语法（拼接字符串）
+          renderList(list);
+          }
+        },
+        error:function(err){
+          console.log(err);
+        }
+      })
+    }
+
+
+    onSearch();
 
 });
