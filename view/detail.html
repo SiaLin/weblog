@@ -44,7 +44,7 @@
       }
       var id = $.getUrlParam('id');
       console.log('文章id：',id);
-      var urlParams = '/api/article/get?id='+ id;  //可以把参数拼到url里，也可以作为data传过去
+      var urlParams = '/api/article/get?id='+ id;  //可以把参数拼到url里，也可以作为data传过去 iapi/article/get/${id}`
       function searchList(){
         $.ajax({
           url: urlParams,

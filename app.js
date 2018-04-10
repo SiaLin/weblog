@@ -124,7 +124,7 @@ router.del('/api/article/:id',async(cxt,next) =>{
 //定义修改文章的接口
 router.post('/api/news/edit',async (ctx,next) =>{
 
-  const payload =ctx.request.body;  //接收数据
+  const payload =ctx.request.body;  //post 接收数据
   const id = payload.id;  //传id => 修改某条数据
   const result = await News.findOneAndUpdate({ _id:id },payload,{new:true});  //条件：{_id:id}  通过_id找到相应的文章  然后把修改后的内容填写进来
     //result =>修改后的内容

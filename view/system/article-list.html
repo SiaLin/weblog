@@ -84,7 +84,7 @@
           success: function(res){
             if(res && res.code === 10000){
               alert(res.msg);
-              $("#listBox").empty();
+              $("#listBox").empty();  //清空页面原本内容
               getList();  //删除成功后 页面没有刷新，但是列表刷新了
             }else {
               alert('删除失败！');
