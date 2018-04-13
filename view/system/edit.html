@@ -17,9 +17,13 @@
 </style>
 <body>
   <form id="edit-form">
-    <div class="input-form">
+    <div class="input-filed">
       <span>标题：</span>
       <input id="title">
+    </div>
+    <div class="input-filed">
+        <span>缩略图：</span>
+        <input id="fileBox" type="file">
     </div>
     <div class="input-filed">
       <span>内容：</span>
@@ -72,6 +76,30 @@ $.getUrlParam= function(name){
 
     }
 
+    var fileUrl = null;
+
+    $('#fileBox').on('change',function(ev){
+      var file = ev.target.files[0];
+      var formData= new FormData();
+      formData.append('img',file);
+
+      $.ajax({
+        url:'/api/files/upload',
+        type:'post',
+        data:formData,
+        processData:false,   //告诉jQuery不要去处理发送的数据
+        contentType:false,    //告诉jQuery不要去设置Content-Type请求头
+        success:function(res){
+          if(res && res.code === 10000){
+             fileUrl = res.data.fileUrl;
+          }
+        },
+        error:function(err){
+          console.log(err);
+        }
+      })
+    });
+
     $('#edit-form').on('submit',function(res){
       var title = $('#title').val();
       var content = $('#content').val();
@@ -86,6 +114,7 @@ $.getUrlParam= function(name){
             id:id,
             title:title,
             content:content,
+            img:fileUrl,
             author:author
           },
           success:function(res){
@@ -110,6 +139,7 @@ $.getUrlParam= function(name){
         data:{
           title:title,
           content:content,
+          img:fileUrl,
           author:author
         },
         dataType:'json',

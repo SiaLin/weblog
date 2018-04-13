@@ -151,7 +151,7 @@ $(document).ready(function(e){
         // `</li>`
         // es6拼接字符方法
         liHTML += `<li>
-                        <img class="article-thumbnail flt" src="images/timg-220x150.jpg" alt="">
+                        <img class="article-thumbnail flt" src="${item.img}" alt="">
                         <div class="article-info">
                           <h2 class="title mb-15">
                             <a href="" class="cat">${item.author || '未知'}<i class="icon-arrow"></i>

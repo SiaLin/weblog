@@ -1,5 +1,7 @@
 const Koa  = require('koa');
 const Router = require('koa-router');
+const fs = require('fs');   //fs path node自带不用安装
+const path = require('path');
 const koaBody = require('koa-body');
 const staticServer = require('koa-static');  //托管静态文件
 const mongoose = require('mongoose');  //连接mongodb的数据驱动包
@@ -15,8 +17,10 @@ const News = require('./models/news.model');
 
 //router  中间键：作为请求和处理的一些插件
 //为何能够轻松定义api，路由    因为引用了koa-router包
-app.use(koaBody());
+app.use(koaBody({multipart:true}));     //koabody支持上传的话要设置一个参数
 app.use(router.routes()).use(router.allowedMethods());
+
+//托管静态文件
 app.use(staticServer(__dirname +'/view'));  //__dirname文件的绝对路径
 
 // router.get('/',(ctx,next) => {
@@ -46,6 +50,7 @@ router.post('/api/news/save',async (ctx,next) =>{   ///api/news/save    后端�
   const data = {
     title:payload.title,
     content: payload.content,
+    img: payload.img,
     author: payload.author,
     createdTime: Date.now()   //保存时间戳
   }//3、拼装成数据库要的格式
@@ -154,6 +159,33 @@ router.post('/api/news/edit',async (ctx,next) =>{
   }
 });
 
+//上传文件的接口
+router.post('/api/files/upload',async (ctx,next) =>{
+  const payload = ctx.request.body;//   查看payload 结构
+  // console.dir(payload);
+  const img = payload.files.img;
+  //引入fs path两个模块
+  const readForm = fs.createReadStream(img.path);   //创建一个文件流，从img.path读取
+  // const extname = path.extname(img.name);     //从文件名img.name拿到拓展名
+
+  const savePath = path.join('/upload/',img.name);              //    /upload/xxxxx.jpg   join() => 规范路径
+  const saveDir = path.join('./view/',savePath);
+
+  const fileStream = fs.createWriteStream(saveDir);     //把文件流写入指点地方的路径
+  readForm.pipe(fileStream);  //通过管道往指点的地方写文件流
+  readForm.on('end',function(ret){     //当文件写完时，给前端一个响应（文件上传完成）
+    console.log(ret);
+  })
+
+
+  ctx.body = {
+    code:10000,
+    data:{
+        fileUrl:savePath
+    },
+    msg:'上传成功！'
+  }
+});
 
 
 //监听服务端口

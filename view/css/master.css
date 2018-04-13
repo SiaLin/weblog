@@ -429,6 +429,8 @@ table {
 }
 
 .listBox li img{
+  width: 220px;
+  height: 150px;
   margin-right:20px;
 }
 
